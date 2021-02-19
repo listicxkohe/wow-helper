@@ -1,0 +1,248 @@
+from tkinter import *
+import os
+import subprocess
+import time
+import ctypes
+import sys
+
+
+def close():
+    exit()
+
+
+def killclient():
+    subprocess.call("taskkill /f /im Wow.exe", shell=True)
+
+def openclient():
+    dirname = os.path.dirname(os.path.abspath(__file__))
+    cmd = os.path.join(dirname, 'Wow.exe')
+
+    os.startfile(cmd)
+    view.set("Opened WoW")
+    
+def changefilenametotxt():
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    thisFile = os.path.join(fileDir, 'Data/enGB/realmlist.wtf')
+    base = os.path.splitext(thisFile)[0]
+    os.rename(thisFile, base + ".txt")
+
+
+def changefilenametowtf():
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    thisFile = os.path.join(fileDir, 'Data/enGB/realmlist.wtf')
+    base = os.path.splitext(thisFile)[0]
+    os.rename(thisFile, base + ".wtf")
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    thisFile2 = os.path.join(fileDir, 'Data/enGB/realmlist.txt')
+    if os.path.exists(thisFile2):
+        os.remove(thisFile2)
+
+def flushdns():
+    os.system('ipconfig/flushdns')
+    view.set("Flushed DNS")
+
+def release():
+    os.system('ipconfig /release')
+    view.set("Released DNS")
+    
+def renew():
+    os.system('ipconfig /renew')
+    view.set("Renewed DNS")
+
+def restart():
+    killclient()
+    openclient()
+    view.set("Restarted Client")
+    
+  
+
+def ping():
+    
+    ping = subprocess.Popen(["ping", "login.apollo-wow.com", "-n", "1"], stdout = subprocess.PIPE,stderr = subprocess.PIPE, shell=True)
+    output = ping.communicate()
+    outpu2 = str(output)
+    ot = outpu2.find("Average") + 9
+    ot2 = ot + 6
+    result1 = outpu2[ot:ot2]
+    serv1.set(result1)
+    #2
+    ping = subprocess.Popen(["ping", "login2.apollo-wow.com", "-n", "1"], stdout = subprocess.PIPE,stderr = subprocess.PIPE, shell=True)
+    output = ping.communicate()
+    outpu2 = str(output)
+    ot = outpu2.find("Average") + 9
+    ot2 = ot + 6
+    result2 = outpu2[ot:ot2]
+    serv2.set(result2)
+    #3
+    ping = subprocess.Popen(["ping", "login3.apollo-wow.com", "-n", "1"], stdout = subprocess.PIPE,stderr = subprocess.PIPE, shell=True)
+    output = ping.communicate()
+    outpu2 = str(output)
+    ot = outpu2.find("Average") + 9
+    ot2 = ot + 6
+    result3 = outpu2[ot:ot2]
+    serv3.set(result3)
+    #4
+    ping = subprocess.Popen(["ping", "wow.twinstar.cz", "-n", "1"], stdout = subprocess.PIPE,stderr = subprocess.PIPE, shell=True)
+    output = ping.communicate()
+    outpu2 = str(output)
+    ot = outpu2.find("Average") + 9
+    ot2 = ot + 6
+    result4 = outpu2[ot:ot2]
+    serv4.set(result4)
+    #garena
+    ping = subprocess.Popen(["ping", "lol.garena.com", "-n", "1"], stdout = subprocess.PIPE,stderr = subprocess.PIPE, shell=True)
+    output = ping.communicate()
+    outpu2 = str(output)
+    ot = outpu2.find("Average") + 9
+    ot2 = ot + 5
+    result5 = outpu2[ot:ot2]
+    serv5.set(result5)
+    view.set("Refreshed ping")
+
+def serverchange1():
+    killclient()
+    changefilenametotxt()
+
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    filename = os.path.join(fileDir, 'Data/enGB/realmlist.wtf')
+    f = open(filename,"w")
+    
+    f.write("set realmlist login.apollo-wow.com\n#set realmlist login2.apollo-wow.com\n#set realmlist login3.apollo-wow.com\n#set realmlist wow.twinstar.cz\nset patchlist localhost")
+    
+    b1.config(background = 'pink')
+    b2.config(background = '#93cdd1')
+    b3.config(background = '#93cdd1')
+    b4.config(background = '#93cdd1')
+    f.close()
+
+    changefilenametowtf()
+    openclient()
+    view.set("Server Changed to 1")
+def serverchange2():
+    killclient()
+    
+    changefilenametotxt()
+    
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    filename = os.path.join(fileDir, 'Data/enGB/realmlist.wtf')
+    f = open(filename,"w")
+    f.write("#set realmlist login.apollo-wow.com\nset realmlist login2.apollo-wow.com\n#set realmlist login3.apollo-wow.com\n#set realmlist wow.twinstar.cz\nset patchlist localhost")
+    
+    b1.config(background = '#93cdd1')
+    b2.config(background = 'pink')
+    b3.config(background = '#93cdd1')
+    b4.config(background = '#93cdd1')
+    f.close()
+
+    changefilenametowtf()
+    openclient()
+    view.set("Server Changed to 2")
+def serverchange3():
+    killclient()
+    
+    changefilenametotxt()
+    
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    filename = os.path.join(fileDir, 'Data/enGB/realmlist.wtf')
+    f = open(filename,"w")
+    f.write("#set realmlist login.apollo-wow.com\n#set realmlist login2.apollo-wow.com\nset realmlist login3.apollo-wow.com\n#set realmlist wow.twinstar.cz\nset patchlist localhost")
+    
+    b1.config(background = '#93cdd1')
+    b2.config(background = '#93cdd1')
+    b3.config(background = 'pink')
+    b4.config(background = '#93cdd1')
+    f.close()
+    
+    changefilenametowtf()
+    openclient()
+    view.set("Server Changed to 3")
+def serverchange4():
+    killclient()
+    
+    changefilenametotxt()
+    
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    filename = os.path.join(fileDir, 'Data/enGB/realmlist.wtf')
+    f = open(filename,"w")
+    f.write("#set realmlist login.apollo-wow.com\n#set realmlist login2.apollo-wow.com\n#set realmlist login3.apollo-wow.com\nset realmlist wow.twinstar.cz\nset patchlist localhost")
+    
+    b1.config(background = '#93cdd1')
+    b2.config(background = '#93cdd1')
+    b3.config(background = '#93cdd1')
+    b4.config(background = 'pink')
+    f.close()
+
+    changefilenametowtf()
+    openclient()
+    view.set("Server Changed to 4")
+
+
+
+ 
+master = Tk()
+serv1=StringVar()
+serv2=StringVar()
+serv3=StringVar()
+serv4=StringVar()
+serv5=StringVar()
+view=StringVar()
+
+
+master.title("Wow Helper v1.0")
+master.geometry("300x215")
+
+master.configure(bg='pink')
+
+os.system("mode con cols=15 lines=15")
+ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 6 )
+
+
+
+
+Label(master, text="login.apollo-wow.com", bg="pink", font='Helvetica 10 bold').grid(row=0, sticky=W)
+Label(master, text="login2.apollo-wow.com", bg="pink", font='Helvetica 10 bold').grid(row=1, sticky=W)
+Label(master, text="login3.apollo-wow.com", bg="pink", font='Helvetica 10 bold').grid(row=2, sticky=W)
+Label(master, text="wow.twinstar.cz", bg="pink", font='Helvetica 10 bold').grid(row=3, sticky=W)
+Label(master, text="lol.garena.com", bg="pink" , font='Helvetica 10 bold').grid(row=4, sticky=W)
+result=Label(master, text="", textvariable=serv1, bg="pink").grid(row=0,column=1, sticky=W)
+result2=Label(master, text="", textvariable=serv2, bg="pink").grid(row=1,column=1, sticky=W)
+result3=Label(master, text="", textvariable=serv3, bg="pink").grid(row=2,column=1, sticky=W)
+result4=Label(master, text="", textvariable=serv4, bg="pink").grid(row=3,column=1, sticky=W)
+result5=Label(master, text="", textvariable=serv5, bg="pink").grid(row=4,column=1, sticky=W)
+ 
+
+
+b1 = Button(master, text="switch", command=serverchange1,bg="#93cdd1")
+b1.grid(row=0, column=2,columnspan=1, rowspan=1,sticky=W+E+N+S, padx=2, pady=2)
+b2 = Button(master, text="switch", command=serverchange2,bg="#93cdd1")
+b2.grid(row=1, column=2,columnspan=1, rowspan=1,sticky=W+E+N+S, padx=2, pady=2)
+b3 = Button(master, text="switch", command=serverchange3,bg="#93cdd1")
+b3.grid(row=2, column=2,columnspan=1, rowspan=1,sticky=W+E+N+S, padx=2, pady=2)
+b4 = Button(master, text="switch",command=serverchange4,bg="#93cdd1")
+b4.grid(row=3, column=2,columnspan=1, rowspan=1,sticky=W+E+N+S, padx=2, pady=2)
+result5=Label(master, text="", textvariable=view, bg="#e75480").grid(row=4,column=2, sticky=W)
+ 
+b = Button(master, text="Refresh", command=ping, bg="#5d61a2", activebackground='pink')
+b.grid(row=6, column=1,columnspan=1, rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
+
+b = Button(master, text="FlushDNS", command=flushdns, bg="#5d61a2", activebackground='pink')
+b.grid(row=6, column=2,columnspan=1, rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
+
+f = Button(master, text="Release", command=release, bg="red", activebackground='pink')
+f.grid(row=8, column=1,columnspan=1, rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
+f1 = Button(master, text="Renew", command=renew, bg="green", activebackground='pink')
+f1.grid(row=8, column=2,columnspan=1, rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
+
+f1 = Button(master, text="Restart WoW", command=restart, bg="#93cdd1", activebackground='pink')
+f1.grid(row=6, column=0,columnspan=1, rowspan=1,sticky=W+E+N+S, padx=5, pady=5)
+f1 = Button(master, text="Open WoW", command=openclient, bg="#93cdd1", activebackground='pink')
+f1.grid(row=8, column=0,columnspan=1, rowspan=1,sticky=W+E+N+S, padx=5, pady=5)
+
+#f1 = Button(master, text="to txt", command=changefilenametotxt, bg="green", activebackground='pink')
+#f1.grid(row=10, column=1,columnspan=1, rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
+#f1 = Button(master, text="to wtf", command=changefilenametowtf, bg="green", activebackground='pink')
+#f1.grid(row=10, column=2,columnspan=1, rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
+
+ 
+mainloop()
+
